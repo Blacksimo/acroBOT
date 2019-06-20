@@ -82,9 +82,6 @@ def main():
     # Unsubscribe from sonars, this will stop sonars (at hardware level)
     sonar_service.unsubscribe("initApplication")
 
-    
-
-
 
 if __name__ == "__main__":
     main()
