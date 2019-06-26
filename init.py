@@ -39,7 +39,6 @@ def main():
     args = parser.parse_args()
     pip = args.pip
     pport = args.pport
-    strsay = args.sentence
     language = 'English'
     speed = 100
 
@@ -73,11 +72,11 @@ def main():
 
     tts_service = session.service("ALTextToSpeech")
     
-    strsay = "Hi. I'm roBOXE, your personal Boxe trainer"
-    tts_service.setLanguage(language)
-    tts_service.setParameter("speed", speed)
-    tts_service.say(strsay)
-    print "  -- Say: "+strsay
+    #strsay = "Hi. I'm roBOXE, your personal Boxe trainer"
+    #tts_service.setLanguage(language)
+    #tts_service.setParameter("speed", speed)
+    #tts_service.say(strsay)
+    #print "  -- Say: "+strsay
 
     # Unsubscribe from sonars, this will stop sonars (at hardware level)
     sonar_service.unsubscribe("initApplication")
