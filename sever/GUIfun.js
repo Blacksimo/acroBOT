@@ -151,11 +151,11 @@ function settingRightLeftColors () {
 	color_percentage = Math.random()*100;
 
 	if (color_percentage <= 50) {
-		right_col = "#red";
-		left_col = "#blue";
+		right_col = '<font color="red">#red</font>';
+		left_col = '<font color="blue">#blue</font>';
 	} else {
-		right_col = "#red";
-		left_col = "#blue";
+		right_col = '<font color="red">#red</font>';
+		left_col = '<font color="blue">#blue</font>';
 	}
 
 	return [right_col, left_col];
@@ -176,9 +176,17 @@ function shuffle(array, level) {
 
   		// Pick a remaining element...
   		randomIndex = Math.floor(Math.random() * currentIndex_wrists);
+  		
+  		var elem = array_aux_wrists[randomIndex];
+  		if (array_aux_knees.includes(elem)) {
+
+  			array_aux_wrists.splice(randomIndex, 1);
+  			continue;
+
+  		}
   		currentIndex_wrists -= 1;
 
-  		reduced_sorted_array.push(array_aux_wrists[randomIndex]);
+  		reduced_sorted_array.push(elem);
   		array_aux_wrists.splice(randomIndex, 1);
 
   		elem_collected += 1;
@@ -187,6 +195,14 @@ function shuffle(array, level) {
 
   		// Pick a remaining element...
   		randomIndex = Math.floor(Math.random() * currentIndex_knees);
+
+  		var elem = array_aux_wrists[randomIndex];
+  		if (array_aux_wrists.includes(elem)) {
+  			
+  			array_aux_wrists.splice(randomIndex, 1);
+  			continue;
+  		}
+
   		currentIndex_wrists -= 1;
 
   		reduced_sorted_array.push(array_aux_knees[randomIndex]);
@@ -296,63 +312,63 @@ function placingFiguresANDSetingColors(right_col, left_col, positions) {
 
 		if (current_position == "center") {
 			
-			figure.style.left = "90vh";
+			figure.style.left = "90vw";
 			figure.style.top = "45vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "top_center") {
 
-			figure.style.left = "90vh";
+			figure.style.left = "90vw";
 			figure.style.top = "5vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "bottom_center") {
 			
-			figure.style.left = "90vh";
+			figure.style.left = "90vw";
 			figure.style.bottom = "5vh";
 			figure.style.right = "";
 			figure.style.top = "";
 
 		} else if (current_position == "right_center") {
 			
-			figure.style.right = "15vh";
+			figure.style.right = "15vw";
 			figure.style.bottom = "45vh";
 			figure.style.left = "";
 			figure.style.top = "";
 
 		} else if (current_position == "left_center") {
 			
-			figure.style.left = "15vh";
+			figure.style.left = "15vw";
 			figure.style.top = "45vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "top_left") {
 			
-			figure.style.left = "15vh";
+			figure.style.left = "15vw";
 			figure.style.top = "5vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "top_right") {
 			
-			figure.style.right = "15vh";
+			figure.style.right = "15vw";
 			figure.style.top = "5vh";
 			figure.style.left = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "bottom_left") {
 			
-			figure.style.left = "15vh";
+			figure.style.left = "15vw";
 			figure.style.bottom = "5vh";
 			figure.style.right = "";
 			figure.style.top = "";
 
 		} else if (current_position == "bottom_right") {
 			
-			figure.style.right = "15vh";
+			figure.style.right = "15vw";
 			figure.style.bottom = "5vh";
 			figure.style.left = "";
 			figure.style.top = "";
@@ -459,7 +475,7 @@ setInterval(function() {
 				document.getElementById("circle2").style.display = 'none';
 				document.getElementById("countdown").style.display = 'none';
 
-				if (current_round <= 3) {
+				if (current_round <= 1) {
 
 					if (current_round > 1) {
 
@@ -507,7 +523,7 @@ setInterval(function() {
 
 					filename = "actual_classes";
 					blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-					saveAs(blob, filename + ".txt");
+					//saveAs(blob, filename + ".txt");
 					gameOver();
 
 				}
