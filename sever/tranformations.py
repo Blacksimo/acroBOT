@@ -4,7 +4,7 @@ def file_parsing(file_path):
 # FILE_PARSING parses the prediction file and return a dictionary containing the joints names as key
 # and the 'image area' of interest related to the considered key
     
-    d = {};
+    d = {}
 
     with open(file_path) as fp:  
        line = fp.readline()
@@ -86,7 +86,7 @@ d = file_parsing("C:\\Users\\damia\\Downloads\\predictions (14).txt")
 
 imageX_size = 1280
 imageY_size = 960
-areas = [];
+areas = []
 for key in d:
 
     current_area = derive_area_from_points(d[key][0], d[key][1], imageX_size, imageY_size) 
