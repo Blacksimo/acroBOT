@@ -1,0 +1,50 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script type="text/javascript">
+        var version = 1.0;
+    </script>
+
+    <script language="Javascript1.1"> version = 1.1; </script>
+    <script language="Javascript1.2"> version = 1.2; </script>
+    <script language="Javascript1.3"> version = 1.3; </script>
+    <script language="Javascript1.4"> version = 1.4; </script>
+    <script language="Javascript1.5"> version = 1.5; </script>
+    <script language="Javascript1.6"> version = 1.6; </script>
+    <script language="Javascript1.7"> version = 1.7; </script>
+    <script language="Javascript1.8"> version = 1.8; </script>
+    <script language="Javascript1.9"> version = 1.9; </script>
+
+
+    <!-- <script type="text/javascript">
+      alert(version);
+    </script> -->
+
+
+</head>
+
+<body>
+    <h1>Javascript Version: </h1>
+    <h2 id="ver"></h2>
+
+    <script type="text/javascript">document.getElementById('ver').innerText = version;</script>
+
+    <script type="text/javascript">
+        /* var data = new FormData();
+        data.append("data", "the_text_you_want_to_save");
+        var xhr = (window.XMLHttpRequest) ? new XMLHttpRequest() : new activeXObject("Microsoft.XMLHTTP");
+        xhr.open('post', 'save.php', true);
+        xhr.send(data); */
+        var XML = new XMLWriter();
+        XML.BeginNode("Foo");
+        XML.WriteString("Hello World");
+        XML.EndNode();
+    </script>
+</body>
+
+</html>
