@@ -1,3 +1,0 @@
-leftWrist bottom_left bottom_right
-rightWrist top_center top_center
-leftKnee left_center right_center
