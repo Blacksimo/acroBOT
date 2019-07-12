@@ -6,17 +6,19 @@ var center_top_bottom = 40;
 
 var right_left = 15;
 var top_bottom = 15;
+var left_col = right_col = null;
 
 var positions = ["center", "top_center", "bottom_center", "right_center", "left_center", "top_left", "top_right", "bottom_left", "bottom_right"];
 var level = 3;
-var square = document.getElementById("square");
-var circle = document.getElementById("circle");
+//var square = document.getElementById("square");
+//var circle = document.getElementById("circle");
 
 var round_per_match = 5;
 var round = 1;
 
 var knees_positions = ["center", "bottom_center", "right_center", "left_center"];
 var wrists_positions = ["top_center", "bottom_center", "right_center", "left_center", "top_left", "top_right", "bottom_right", "bottom_left"];
+
 
 function countdown() {
 
@@ -44,6 +46,7 @@ function countdown() {
 
 }
 
+
 function incrementingRound(current_round) {
 
 	document.getElementById("round").innerHTML = 'Round' + '&nbsp;' + current_round.toString();
@@ -53,6 +56,7 @@ function incrementingRound(current_round) {
 
 	return current_round;
 }
+//document.getElementById("line0").innerHTML = "REMEMBER:" + '&nbsp;color&nbsp;represents&nbsp;the&nbsp;RIGHT';
 
 function gamesRules(level, our_figures, right_col, left_col) {
 
@@ -76,6 +80,7 @@ function gamesRules(level, our_figures, right_col, left_col) {
 	$("#rules").fadeOut(12000);
 
 }
+
 
 function fromJointToFigure(level) {
 
@@ -143,12 +148,12 @@ function fromJointToFigure(level) {
 
 	return [wrist_figure1, wrist_figure2, knee_figure, dict];
 
-}
+} 
 
 function settingRightLeftColors () {
 
-	var left_color = right_color = "";
-	color_percentage = Math.random()*100;
+	
+	var color_percentage = Math.random()*100;
 
 	if (color_percentage <= 50) {
 		right_col = "#red";
@@ -157,18 +162,21 @@ function settingRightLeftColors () {
 		right_col = "#red";
 		left_col = "#blue";
 	}
-
-	return [right_col, left_col];
 }
 
+
 function shuffle(array, level) {
-  var currentIndex_wrists = wrists_positions.length, temporaryValue, randomIndex;
-  var currentIndex_knees = knees_positions.length, temporaryValue, randomIndex;
+  var currentIndex_wrists = wrists_positions.length;//, randomIndex;
+  var currentIndex_knees = knees_positions.length;//, randomIndex;
+  var randomIndex;
+
+  document.getElementById('culo').innerText = "uno";
 
   var array_aux_wrists = wrists_positions.slice();
   var array_aux_knees = knees_positions.slice();
   var reduced_sorted_array = new Array();
   var elem_collected = 1;
+  document.getElementById('culo').innerText = "due";
 
   while (elem_collected <= level) {
 
@@ -176,25 +184,36 @@ function shuffle(array, level) {
 
   		// Pick a remaining element...
   		randomIndex = Math.floor(Math.random() * currentIndex_wrists);
+  document.getElementById('culo').innerText = "tre";
   		
-  		var elem = array_aux_wrists[randomIndex];
+		  var elem = array_aux_wrists[randomIndex];
+  document.getElementById('culo').innerText = "tre bis";
+		  
   		if (array_aux_knees.includes(elem)) {
+  		document.getElementById('culo').innerText = "quattro";
 
   			array_aux_wrists.splice(randomIndex, 1);
   			continue;
 
   		}
   		currentIndex_wrists -= 1;
+		document.getElementById('culo').innerText = "cinque";
 
-  		reduced_sorted_array.push(elem);
+		  reduced_sorted_array.push(elem);
+		document.getElementById('culo').innerText = "sei";
+		  
   		array_aux_wrists.splice(randomIndex, 1);
 
   		elem_collected += 1;
 
   	} else if ( (elem_collected == 3) ) {
 
-  		// Pick a remaining element...
+		  // Pick a remaining element...
+  document.getElementById('culo').innerText = "quattro";
+		  
   		randomIndex = Math.floor(Math.random() * currentIndex_knees);
+
+  document.getElementById('culo').innerText = "cinque";
 
   		var elem = array_aux_knees[randomIndex];
   		if (array_aux_wrists.includes(elem)) {
@@ -204,8 +223,10 @@ function shuffle(array, level) {
   		}
 
   		currentIndex_wrists -= 1;
+		  document.getElementById('culo').innerText = "sei";
 
   		reduced_sorted_array.push(array_aux_knees[randomIndex]);
+		document.getElementById('culo').innerText = "sette";
   		array_aux_knees.splice(randomIndex, 1);
 
   		elem_collected += 1;
@@ -218,6 +239,8 @@ function shuffle(array, level) {
 
 }
 
+var wrist1_color, wrist2_color, knee_color;
+
 function pickColor() {
 
 	color_percentage = Math.random()*100;
@@ -226,13 +249,13 @@ function pickColor() {
 	
 	if (color_percentage < 50) {
 
-		var wrist1_color = red;
-		var wrist2_color = blue;
+		wrist1_color = red;
+		wrist2_color = blue;
 
 	} else {
 		
-		var wrist1_color = blue;
-		var wrist2_color = red;
+		wrist1_color = blue;
+		wrist2_color = red;
 
 	}
 
@@ -240,18 +263,20 @@ function pickColor() {
 
 	if (color_percentage2 < 50) {
 
-		var knee_color = red;
+		knee_color = red;
 
 	} else {
 
-		var knee_color = blue;		
+		knee_color = blue;		
 
 	}
 
-	return [wrist1_color, wrist2_color, knee_color];
+	//return [wrist1_color, wrist2_color, knee_color];
 }
 
 // The following function avoid to generate 'impossible' position (e.g. 'right elbow on top-left corner and right wrist on bottom left corner'):
+
+
 function colorFigures(colors, current_position) {
 
 	var chosen_color;
@@ -277,28 +302,38 @@ function colorFigures(colors, current_position) {
 
 }
 
+
 var fig = fromJointToFigure(level);
 figures_length = fig.length;
 var dictionary_aux = fig[figures_length-1];
 
-var counter = 0;
 var figures = [];
+var counter = 0;
 for (counter; counter<figures_length-1; counter++) {
 
 	figures.push(fig[counter]);
 
 }
 
-[right_col, left_col] = settingRightLeftColors();
+settingRightLeftColors();
 gamesRules(level, figures, right_col, left_col)
-var colors = pickColor();
+//var colors = pickColor();
+
 
 function placingFiguresANDSetingColors(right_col, left_col, positions) {
  
 	var figure_index;
-	var colors = pickColor(); // contain the colors for figures appearing respectively on the left, right and in the middle of the screen
-	var chosen_colors = pickColor();
-	//console.log(chosen_colors)
+	//var colors = pickColor(); // contain the colors for figures appearing respectively on the left, right and in the middle of the screen
+	/* pickColor();
+	var chosen_colors = new Array();//[wrist1_color, wrist2_color, knee_color];
+	chosen_colors[0] = wrist1_color;
+	chosen_colors[1] = wrist2_color;
+	chosen_colors[2] = knee_color; */
+
+	
+
+	
+	console.log(chosen_colors)
 
 	for (figure_index=0; figure_index<level; figure_index++) {
 		
@@ -306,7 +341,7 @@ function placingFiguresANDSetingColors(right_col, left_col, positions) {
 		//console.log(positions)
 		var figure_name = figures[figure_index];
 		var figure = document.getElementById(figure_name);
-		colorFigures(colors, current_position);
+		colorFigures(chosen_colors, current_position);
 		var chosen_color = chosen_colors[figure_index]; 
 		//var chosen_color = pickColor();
 
@@ -381,7 +416,7 @@ function placingFiguresANDSetingColors(right_col, left_col, positions) {
 	}
 
 }
-
+/*
 
 function associate_joints_to_colors(level, dictionary, position, first_elem) {
 
@@ -458,14 +493,23 @@ function gameOver() {
 
 var dictionary = {}; // --> It will store the joints as keys and the the array (which length equal to the number of the rounds) containing the related 'image areas' as values
 //var [right_color, left_color] = settingRightLeftColors();
+*/
 var current_round = 1;
 
-setTimeout(function() {current_round = incrementingRound(current_round);}, 10000);
+
+setTimeout(function() {
+	current_round = incrementingRound(current_round);
+
+}, 10000);
+
+
 var random_sorted_positions = shuffle(positions, level);
+
 //console.log(dictionary)
+
 setTimeout(function() {placingFiguresANDSetingColors(right_col, left_col, random_sorted_positions); dictionary = associate_joints_to_colors(level, dictionary_aux, random_sorted_positions, true);}, 13500);
 setTimeout(function() {countdown();}, 22000);
-
+/*
 var milliseconds = 25000;
 var refresh_interval = setInterval(function() {
 
@@ -531,9 +575,4 @@ var refresh_interval = setInterval(function() {
 				}
 }, milliseconds)
 
-/*
-if (current_round] + == 6) {
-
-	gameOver();
-}
 */
