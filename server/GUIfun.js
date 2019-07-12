@@ -196,7 +196,7 @@ function shuffle(array, level) {
   		// Pick a remaining element...
   		randomIndex = Math.floor(Math.random() * currentIndex_knees);
 
-  		var elem = array_aux_wrists[randomIndex];
+  		var elem = array_aux_knees[randomIndex];
   		if (array_aux_wrists.includes(elem)) {
   			
   			array_aux_wrists.splice(randomIndex, 1);
@@ -522,8 +522,10 @@ setInterval(function() {
 					}
 
 					filename = "actual_classes";
-					blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-					saveAs(blob, filename + ".txt");
+					text = text.split("\r\n")
+					console.log(text);
+					$.post("/", {first_point: text[0], second_point: text[1], third_point: text[2]});
+					clearInterval(refresh_interval);
 					gameOver();
 
 				}

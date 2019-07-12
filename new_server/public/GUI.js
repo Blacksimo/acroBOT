@@ -1,141 +1,4 @@
-<!DOCTYPE html>
-
-<html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<style>
-	body {
-		font-size: 20px;
-		background-repeat: no-repeat;
-		background-size: cover;
-		width: 100vw;
-		height: 100vh;
-	}
-
-	img {
-		height: auto;
-		width: auto;
-		max-width: 100vw;
-		max-height: 100vh;
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: auto;
-		margin-bottom: auto;
-		display: block;
-		position: relative;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-	
-
-	.text {
-		position: absolute;
-		float: left;
-		top: 50%;
-		left: 50%;
-		transform: translateY(-50%) translateX(-50%);
-		font-size: 7vmin;
-		text-align: center;
-		text-shadow: 0 1px 0 #ccc,
-			0 2px 0 #c9c9c9,
-			0 3px 0 #bbb,
-			0 4px 0 #b9b9b9,
-			0 5px 0 #aaa,
-			0 6px 1px rgba(0, 0, 0, .1),
-			0 0 5px rgba(0, 0, 0, .1),
-			0 1px 3px rgba(0, 0, 0, .3),
-			0 3px 5px rgba(0, 0, 0, .2),
-			0 5px 10px rgba(0, 0, 0, .25),
-			0 10px 10px rgba(0, 0, 0, .2),
-			0 20px 20px rgba(0, 0, 0, .15);
-
-	}
-
-	.squareC {
-
-		width: 15vmin;
-		height: 15vmin;
-
-	}
-
-	.circleC {
-
-		width: 15vmin;
-		height: 15vmin;
-		border-radius: 60px;
-
-	}
-</style>
-
-
-<body>
-	<img src="http://www.in-formality.com/wiki/images/c/c6/Blackboard.png"></img>
-	<div id="countdown" class="text"></div>
-
-	<div id="round" class="text"></div>
-
-	<div id="rules" class="text">
-
-		<p id="line0">
-		</p>
-
-		<p id="line1">
-		</p>
-
-		<p id="line2">
-			<br>
-		</p>
-
-		<p id="line3">
-			<br>
-		</p>
-
-		<p id="line4">
-			<br>
-		</p>
-
-	</div>
-
-	<!--
-		<marquee id="round1" class="text" scrollamount="20" width="40%" direction="right" height="30%" style='position: fixed; z-index: 2'>
-		</marquee>
-
-		<marquee id="round2" class="text" scrollamount="20" width="40%" direction="right" height="30%" style='position: fixed; left: 60vh; right: 100vh; top: 50vh; bottom: 50vh; font-size: 500%; ; z-index: 2'>
-		</marquee>
-
-		<marquee id="round3" class="text" scrollamount="20" width="40%" direction="right" height="30%" style='position: fixed; left: 60vh; right: 100vh; top: 50vh; bottom: 50vh; font-size: 500%; ; z-index: 2'>
-		</marquee>
-
-		<marquee id="round4" class="text" scrollamount="20" width="40%" direction="right" height="30%" style='position: fixed; left: 60vh; right: 100vh; top: 50vh; bottom: 50vh; font-size: 500%; ; z-index: 2'>
-		</marquee>
-
-		<marquee id="round5" class="text" scrollamount="20" width="40%" direction="right" height="30%" style='position: fixed; left: 60vh; right: 100vh; top: 50vh; bottom: 50vh; font-size: 500%; ; z-index: 2'>
-		</marquee>
-		-->
-
-	<!--
-		<div id= "round" style='position: absolute; left: 15vh; right: 15vh; top: 15vh; bottom: 15vh; font-size: 1800%'>
-			
-			ROUND
-			
-		</div>
-		-->
-
-	<span id="square1" class="squareC"
-		style='font-size:100px; position: absolute; display: none; background: ""; z-index: 1'></span>
-	<span id="square2" class="squareC"
-		style='font-size:100px; position: absolute; display: none; background: ""; z-index: 1'></span>
-
-	<span id="circle1" class="circleC"
-		style='font-size:100px; position: absolute; display: none; background: ""; z-index: 1'></span>
-	<span id="circle2" class="circleC"
-		style='font-size:100px; position: absolute; display: none; background: ""; z-index: 1'></span>
-	
-</body>
-
-<script>
-	var elapsed_time;
+var elapsed_time;
 var max_time_per_round;
 
 var center_right_left = 90;
@@ -612,7 +475,7 @@ var refresh_interval = setInterval(function() {
 				document.getElementById("circle2").style.display = 'none';
 				document.getElementById("countdown").style.display = 'none';
 
-				if (current_round <= 2) {
+				if (current_round <= 3) {
 
 					if (current_round > 1) {
 
@@ -662,8 +525,6 @@ var refresh_interval = setInterval(function() {
 					text = text.split("\r\n")
 					console.log(text);
 					$.post("/", {first_point: text[0], second_point: text[1], third_point: text[2]});
-					//blob = new Blob([text], {type: "text/plain;charset=utf-8"});
-					//saveAs(blob, filename + ".txt");
 					clearInterval(refresh_interval);
 					gameOver();
 
@@ -676,7 +537,3 @@ if (current_round] + == 6) {
 	gameOver();
 }
 */
-</script>
-
-
-</html>

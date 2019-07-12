@@ -6,9 +6,11 @@ var fs = require('fs');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', function (req, res) {
+/* app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/GUI.html'));
-});
+}); */
+
+app.use(express.static('public'));
 
 app.post("/", function(req,res){
     console.log("Ricevuto una richiesta POST");
