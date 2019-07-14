@@ -189,7 +189,7 @@ function shuffle(array, level) {
 		  var elem = array_aux_wrists[randomIndex];
   document.getElementById('culo').innerText = "tre bis";
 		  
-  		if (array_aux_knees.includes(elem)) {
+  		if (array_aux_knees.indexOf(elem) >= 0) {
   		document.getElementById('culo').innerText = "quattro";
 
   			array_aux_wrists.splice(randomIndex, 1);
@@ -216,7 +216,7 @@ function shuffle(array, level) {
   document.getElementById('culo').innerText = "cinque";
 
   		var elem = array_aux_knees[randomIndex];
-  		if (array_aux_wrists.includes(elem)) {
+  		if (array_aux_wrists.indexOf(elem) >= 0) {
   			
   			array_aux_wrists.splice(randomIndex, 1);
   			continue;
@@ -239,7 +239,7 @@ function shuffle(array, level) {
 
 }
 
-var wrist1_color, wrist2_color, knee_color;
+//var wrist1_color, wrist2_color, knee_color;
 
 function pickColor() {
 
@@ -249,13 +249,13 @@ function pickColor() {
 	
 	if (color_percentage < 50) {
 
-		wrist1_color = red;
-		wrist2_color = blue;
+		var wrist1_color = red;
+		var wrist2_color = blue;
 
 	} else {
 		
-		wrist1_color = blue;
-		wrist2_color = red;
+		var wrist1_color = blue;
+		var wrist2_color = red;
 
 	}
 
@@ -263,15 +263,15 @@ function pickColor() {
 
 	if (color_percentage2 < 50) {
 
-		knee_color = red;
+		var knee_color = red;
 
 	} else {
 
-		knee_color = blue;		
+		var knee_color = blue;		
 
 	}
 
-	//return [wrist1_color, wrist2_color, knee_color];
+	return [wrist1_color, wrist2_color, knee_color];
 }
 
 // The following function avoid to generate 'impossible' position (e.g. 'right elbow on top-left corner and right wrist on bottom left corner'):
@@ -280,19 +280,19 @@ function pickColor() {
 function colorFigures(colors, current_position) {
 
 	var chosen_color;
-	var left = current_position.includes("left");
-	var right = current_position.includes("right");
-	var center = current_position.includes("center");
+	var left = current_position.indexOf("left");
+	var right = current_position.indexOf("right");
+	var center = current_position.indexOf("center");
 
-	if (left == true) {
+	if (left >= 0) {
 
 		chosen_color = colors[0];
 
-	} else if (right == true) {
+	} else if (right >= 0) {
 
 		chosen_color = colors[1];
 
-	} else if (center == true) {
+	} else if (center >= 0) {
 
 		chosen_color = colors[2];
 
@@ -323,17 +323,12 @@ gamesRules(level, figures, right_col, left_col)
 function placingFiguresANDSetingColors(right_col, left_col, positions) {
  
 	var figure_index;
-	//var colors = pickColor(); // contain the colors for figures appearing respectively on the left, right and in the middle of the screen
+	var chosen_colors = pickColor(); // contain the colors for figures appearing respectively on the left, right and in the middle of the screen
 	/* pickColor();
 	var chosen_colors = new Array();//[wrist1_color, wrist2_color, knee_color];
 	chosen_colors[0] = wrist1_color;
 	chosen_colors[1] = wrist2_color;
 	chosen_colors[2] = knee_color; */
-
-	
-
-	
-	console.log(chosen_colors)
 
 	for (figure_index=0; figure_index<level; figure_index++) {
 		
