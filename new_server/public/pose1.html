@@ -1,0 +1,190 @@
+<html>
+  <head>
+    <!-- Load TensorFlow.js -->
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="/FileSaverJS-master/dist/FileSaver.js"></script>
+    <scriptsrc src="require.js"></script>
+    <!-- Load Posenet -->
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ </head>
+
+ <style>
+
+    .outsideWrapper {
+          width:641px; 
+          height:800px;
+          margin:20px 60px;
+          border:1px solid blue;
+      }
+      .insideWrapper {
+          width:100%;
+          height:100%;
+          position:relative;
+      }
+      .coveredImage {
+          width:100%;
+          height:100%;
+          position:absolute;
+          top:0px;
+          left:0px;
+      }
+      .coveringCanvas {
+          width:100%;
+          height:100%;
+          position:absolute;
+          top:0px;
+          left:0px;
+          background-color: rgba(255, 0, 0, .1);
+      }
+
+ </style>
+
+  <body>
+
+      <div class="outsideWrapper">
+          <div class="insideWrapper">
+              <img id='cat' src='pose1.png'/> <!-- provaPose2.png -->
+              <canvas id="myCanvas" class="coveringCanvas"></canvas>
+          </div>
+      </div>
+      
+      <!--
+      <img id='cat' src='/provaPose2.png'/>
+      <canvas id="myCanvas" width="1280" height="960">
+      -->
+
+  </body>
+  <!-- Place your code in the script tag below. You can also use an external .js file -->
+  <script>
+    var imageScaleFactor = 0.5;
+    var outputStride = 16;
+    var flipHorizontal = false;
+    var predictions = {};
+
+    var imageElement = document.getElementById('cat');
+
+    posenet.load().then(function(net){
+      return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
+    }).then(function(pose){
+      console.log(pose);
+      // Extracting joints of out interest (the nose is used to check the reversed pose):
+      var left_wrist = pose.keypoints[9];
+      var right_wrist = pose.keypoints[10];
+      var left_knee = pose.keypoints[13];
+      var right_knee = pose.keypoints[14];
+      var nose = pose.keypoints[0];
+      
+      // Saving the previous joints in dictionary 'prediction':
+      predictions[left_wrist.part] = left_wrist.position;
+      predictions[right_wrist.part] = right_wrist.position;
+      predictions[left_knee.part] = left_knee .position;
+      predictions[right_knee.part] = right_knee.position;
+
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      ctx.font = "8px Arial";
+      //ctx.fillText("nose", predictions["nose"]["x"]/4.27, predictions["nose"]["y"]/6);
+      //ctx.fillText("leftElbow", predictions["leftElbow"]["x"]/4.27, predictions["leftElbow"]["y"]/6);
+      //ctx.fillText("rightElbow", predictions["rightElbow"]["x"]/4.27, predictions["rightElbow"]["y"]/6);
+      ctx.fillText("leftKnee", predictions["leftKnee"]["x"]/4.27, predictions["leftKnee"]["y"]/6);
+      ctx.fillText("rightKnee", predictions["rightKnee"]["x"]/4.27, predictions["rightKnee"]["y"]/6);
+
+      var filename = "pose1";
+      var current_joint_index = 0;
+      var joints_num = 5;
+      var blob;
+      var joints_of_interest = ["leftWrist", "rightWrist", "leftKnee", "rightKnee", "nose"];
+      var text = "";
+
+      var reversed_pose;
+
+      if (nose.score <= 0.65) {
+
+        reversed_pose = true; 
+
+      } else {
+
+        reversed_pose = false;
+
+      }
+
+      var last_joint_index = joints_num-1;
+      for (current_joint_index; current_joint_index<joints_num; current_joint_index++) {
+
+        current_key = Object.keys(predictions)[current_joint_index];
+
+        var current_x_coord;
+        var current_y_coord;
+
+        if (current_joint_index == last_joint_index) {
+
+          if (reversed_pose == "true") {
+
+            current_x_coord = reversed_pose;
+            current_y_coord = "";
+
+          } else {
+
+            current_x_coord = !reversed_pose;
+            current_y_coord = "";
+
+          }
+
+        } else {
+
+          if (current_key == "leftKnee") {
+
+            score = parseFloat(left_knee.score);
+            
+            if (score <= 0.65) {
+
+              current_x_coord = "false";
+              current_y_coord = "";
+            
+            } else {
+
+              current_x_coord = predictions[current_key]["x"] + " ";
+              current_y_coord = predictions[current_key]["y"] + " ";
+
+            }
+
+
+          } else if (current_key == "rightKnee") {
+
+            score = parseFloat(right_knee.score);
+
+            if (score <= 0.65) {
+
+              current_x_coord = "false";
+              current_y_coord = "";
+
+            } else {
+
+              current_x_coord = predictions[current_key]["x"] + " ";
+              current_y_coord = predictions[current_key]["y"] + " ";
+
+            }
+
+          } else {
+
+            current_x_coord = predictions[current_key]["x"] + " ";
+            current_y_coord = predictions[current_key]["y"] + " ";
+
+          }
+
+        }
+
+        text += joints_of_interest[current_joint_index] + " " + (current_x_coord).toString() + (current_y_coord).toString() + "\r\n";
+
+      }
+
+      blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+
+      saveAs(blob, filename + ".txt");
+
+    })
+
+  </script>
+  
+</html>
