@@ -170,13 +170,13 @@ function shuffle(array, level) {
   var currentIndex_knees = knees_positions.length;//, randomIndex;
   var randomIndex;
 
-  //document.getElementById('culo').innerText = "uno";
+  document.getElementById('culo').innerText = "uno";
 
   var array_aux_wrists = wrists_positions.slice();
   var array_aux_knees = knees_positions.slice();
   var reduced_sorted_array = new Array();
   var elem_collected = 1;
-  //document.getElementById('culo').innerText = "due";
+  document.getElementById('culo').innerText = "due";
 
   while (elem_collected <= level) {
 
@@ -184,32 +184,23 @@ function shuffle(array, level) {
 
   		// Pick a remaining element...
   		randomIndex = Math.floor(Math.random() * currentIndex_wrists);
-  //document.getElementById('culo').innerText = "tre";
+  document.getElementById('culo').innerText = "tre";
   		
 		  var elem = array_aux_wrists[randomIndex];
-  //document.getElementById('culo').innerText = "tre bis";
+  document.getElementById('culo').innerText = "tre bis";
 		  
-  		//if (array_aux_knees.indexOf(elem) >= 0) {
-  		//document.getElementById('culo').innerText = "quattro";
+  		if (array_aux_knees.indexOf(elem) >= 0) {
+  		document.getElementById('culo').innerText = "quattro";
 
-  		//	array_aux_wrists.splice(randomIndex, 1);
-  		//	continue;
-
-  		//}
-
-  		// Avoiding to place two wrists on the same area:
-  		if (reduced_sorted_array.indexOf(elem) >= 0) {
-
-  			//array_aux_wrists.splice(randomIndex, 1);
+  			array_aux_wrists.splice(randomIndex, 1);
   			continue;
 
   		}
-
   		currentIndex_wrists -= 1;
-		//document.getElementById('culo').innerText = "cinque";
+		document.getElementById('culo').innerText = "cinque";
 
 		  reduced_sorted_array.push(elem);
-		//document.getElementById('culo').innerText = "sei";
+		document.getElementById('culo').innerText = "sei";
 		  
   		array_aux_wrists.splice(randomIndex, 1);
 
@@ -218,23 +209,13 @@ function shuffle(array, level) {
   	} else if ( (elem_collected == 3) ) {
 
 		  // Pick a remaining element...
-  //document.getElementById('culo').innerText = "quattro";
+  document.getElementById('culo').innerText = "quattro";
 		  
   		randomIndex = Math.floor(Math.random() * currentIndex_knees);
 
-  //document.getElementById('culo').innerText = "cinque";
+  document.getElementById('culo').innerText = "cinque";
 
   		var elem = array_aux_knees[randomIndex];
-
-  		// Avoiding to place two wrists on the same area:
-  		if (reduced_sorted_array.indexOf(elem) >= 0) {
-
-  			//array_aux_wrists.splice(randomIndex, 1);
-  			continue;
-
-  		}
-
-  		// AVoiding to place knee and wrist on the same position:
   		if (array_aux_wrists.indexOf(elem) >= 0) {
   			
   			array_aux_wrists.splice(randomIndex, 1);
@@ -242,10 +223,10 @@ function shuffle(array, level) {
   		}
 
   		currentIndex_wrists -= 1;
-		  //document.getElementById('culo').innerText = "sei";
+		  document.getElementById('culo').innerText = "sei";
 
   		reduced_sorted_array.push(array_aux_knees[randomIndex]);
-		//document.getElementById('culo').innerText = "sette";
+		document.getElementById('culo').innerText = "sette";
   		array_aux_knees.splice(randomIndex, 1);
 
   		elem_collected += 1;
@@ -299,7 +280,6 @@ function pickColor() {
 function colorFigures(colors, current_position) {
 
 	var chosen_color;
-	//console.log(current_position);
 	var left = current_position.indexOf("left");
 	var right = current_position.indexOf("right");
 	var center = current_position.indexOf("center");
@@ -431,7 +411,7 @@ function placingFiguresANDSetingColors(right_col, left_col, positions) {
 	}
 
 }
-
+/*
 
 function associate_joints_to_colors(level, dictionary, position, first_elem) {
 
@@ -455,8 +435,8 @@ function associate_joints_to_colors(level, dictionary, position, first_elem) {
 
 		//console.log(current_key1)
 
-		current_key2 = Object.keys(dictionary)[counter].substring(7, dictionary.length);
-		if ( current_key1 == left_col.substring(1, dictionary.length)) {
+		current_key2 = Object.keys(dictionary)[counter].substring(7, );
+		if ( current_key1 == left_col.substring(1, )) {
 
 			//console.log("merda")
 			
@@ -507,8 +487,8 @@ function gameOver() {
 }
 
 var dictionary = {}; // --> It will store the joints as keys and the the array (which length equal to the number of the rounds) containing the related 'image areas' as values
-settingRightLeftColors();
-
+//var [right_color, left_color] = settingRightLeftColors();
+*/
 var current_round = 1;
 
 
@@ -519,13 +499,12 @@ setTimeout(function() {
 
 
 var random_sorted_positions = shuffle(positions, level);
-console.log(random_sorted_positions);
 
 //console.log(dictionary)
 
 setTimeout(function() {placingFiguresANDSetingColors(right_col, left_col, random_sorted_positions); dictionary = associate_joints_to_colors(level, dictionary_aux, random_sorted_positions, true);}, 13500);
 setTimeout(function() {countdown();}, 22000);
-
+/*
 var milliseconds = 25000;
 var refresh_interval = setInterval(function() {
 
@@ -546,7 +525,6 @@ var refresh_interval = setInterval(function() {
 					current_round = incrementingRound(current_round);
 					//document.getElementById("round").style.display = 'block';
 					random_sorted_positions = shuffle(positions, level);
-					console.log(random_sorted_positions);
 					setTimeout(function() 
 								{
 									placingFiguresANDSetingColors(right_col, left_col, random_sorted_positions);
@@ -584,10 +562,12 @@ var refresh_interval = setInterval(function() {
 
 					filename = "actual_classes";
 					text = text.split("\r\n")
-					//console.log(text);
+					console.log(text);
 					$.post("/", {first_point: text[0], second_point: text[1], third_point: text[2]});
 					clearInterval(refresh_interval);
 					gameOver();
 
 				}
 }, milliseconds)
+
+*/
