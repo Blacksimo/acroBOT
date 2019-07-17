@@ -60,8 +60,10 @@ function incrementingRound(current_round) {
 
 function gamesRules(level, our_figures, right_col, left_col) {
 
-	document.getElementById("line1").innerHTML = right_col.substring(1, right_col.length).toUpperCase() + '&nbsp;color&nbsp;represents&nbsp;the&nbsp;RIGHT';
-	document.getElementById("line2").innerHTML = left_col.substring(1, left_col.length).toUpperCase() + '&nbsp;color&nbsp;represents&nbsp;the&nbsp;LEFT';
+	document.getElementById("line0").innerHTML = "REMEMBER:";
+
+	document.getElementById("line1").innerHTML = right_col.toUpperCase() + '&nbsp;color&nbsp;represents&nbsp;the&nbsp;RIGHT';
+	document.getElementById("line2").innerHTML = left_col.toUpperCase() + '&nbsp;color&nbsp;represents&nbsp;the&nbsp;LEFT';
 
 	if (level <= 2) {
 
@@ -73,8 +75,6 @@ function gamesRules(level, our_figures, right_col, left_col) {
 		document.getElementById("line4").innerHTML = 'KNEES&nbsp;are&nbsp;represented&nbsp;as&nbsp;' + our_figures[2].replace("1", "") + "s";
 
 	}
-
-	document.getElementById("lineHint").innerHTML =  'Knees&nbspare&nbspPURPLE&nbsp(use&nbspyour&nbspfavorite)';
 
 	$("#rules").fadeIn(0);
 	$("#rules").fadeOut(12000);
@@ -159,8 +159,8 @@ function settingRightLeftColors () {
 		right_col = "#red";
 		left_col = "#blue";
 	} else {
-		right_col = "#blue";
-		left_col = "#red";
+		right_col = "#red";
+		left_col = "#blue";
 	}
 }
 
@@ -229,7 +229,7 @@ function shuffle(array, level) {
   		// Avoiding to place two wrists on the same area:
   		if (reduced_sorted_array.indexOf(elem) >= 0) {
 
-  			array_aux_wrists.splice(randomIndex, 1);
+  			//array_aux_wrists.splice(randomIndex, 1);
   			continue;
 
   		}
@@ -265,8 +265,7 @@ function pickColor() {
 	color_percentage = Math.random()*100;
 	var red = "#ff0000";
 	var blue = "#0000ff";
-	var purple = "#800080";
-
+	
 	if (color_percentage < 50) {
 
 		var wrist1_color = red;
@@ -279,10 +278,17 @@ function pickColor() {
 
 	}
 
-	
-	var knee_color = purple;
-	var knee_color = purple;		
+	var color_percentage2 = Math.random()*100;
 
+	if (color_percentage2 < 50) {
+
+		var knee_color = red;
+
+	} else {
+
+		var knee_color = blue;		
+
+	}
 
 	return [wrist1_color, wrist2_color, knee_color];
 }
@@ -356,63 +362,63 @@ function placingFiguresANDSetingColors(right_col, left_col, positions) {
 
 		if (current_position == "center") {
 			
-			figure.style.left = "45vw";
+			figure.style.left = "90vh";
 			figure.style.top = "45vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "top_center") {
 
-			figure.style.left = "45vw";
+			figure.style.left = "90vh";
 			figure.style.top = "5vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "bottom_center") {
 			
-			figure.style.left = "45vw";
+			figure.style.left = "90vh";
 			figure.style.bottom = "5vh";
 			figure.style.right = "";
 			figure.style.top = "";
 
 		} else if (current_position == "right_center") {
 			
-			figure.style.right = "15vw";
+			figure.style.right = "15vh";
 			figure.style.bottom = "45vh";
 			figure.style.left = "";
 			figure.style.top = "";
 
 		} else if (current_position == "left_center") {
 			
-			figure.style.left = "15vw";
+			figure.style.left = "15vh";
 			figure.style.top = "45vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "top_left") {
 			
-			figure.style.left = "15vw";
+			figure.style.left = "15vh";
 			figure.style.top = "5vh";
 			figure.style.right = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "top_right") {
 			
-			figure.style.right = "15vw";
+			figure.style.right = "15vh";
 			figure.style.top = "5vh";
 			figure.style.left = "";
 			figure.style.bottom = "";
 
 		} else if (current_position == "bottom_left") {
 			
-			figure.style.left = "15vw";
+			figure.style.left = "15vh";
 			figure.style.bottom = "5vh";
 			figure.style.right = "";
 			figure.style.top = "";
 
 		} else if (current_position == "bottom_right") {
 			
-			figure.style.right = "15vw";
+			figure.style.right = "15vh";
 			figure.style.bottom = "5vh";
 			figure.style.left = "";
 			figure.style.top = "";

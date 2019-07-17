@@ -2,6 +2,8 @@ import pepper_cmd
 from pepper_cmd import *
 import webbrowser
 import os.path
+import transformations
+
 BASE_URL = 'http://10.0.1.204:3000/'
 
 voc = ['yes', 'no']
@@ -28,7 +30,13 @@ if(pepper_cmd.robot.asr(voc) == 'yes'):
     webbrowser.open_new(BASE_URL + 'pose3.html')
     pepper_cmd.robot.asay('Ok, we finished. I\'m calculating your score')
     pepper_cmd.robot.stopFrameGrabber()
-    """ while(True):
-        if os.path.isfile('pose1.txt') and os.path.isfile('pose2.txt') and os.path.isfile('pose1.txt'):
-            break """
+    while(True):
+        if os.path.isfile('pose1.txt') and os.path.isfile('pose2.txt') and os.path.isfile('pose3.txt'):
+            break
+    score = transformations.main()
+    while(True):
+        if os.path.isfile('finish.txt'):
+            break
+    pepper_cmd.robot.asay('nice, your finalscore is: ' + str(score))
+    pepper_cmd.robot.sax()
 end()
