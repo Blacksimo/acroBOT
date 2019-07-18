@@ -185,7 +185,7 @@ def elaborating_score(correct_poses, user_poses):
 
     return correctness_percentage
 
-def main():
+def banana():
     files = [predictions_file_parsing("pose1.txt"), predictions_file_parsing("pose2.txt"), predictions_file_parsing("pose3.txt")]
     #predicted_class = predictions_file_parsing("C:\\Users\\damia\\Downloads\\predictions (13).txt")
     imageX_size = 1280
@@ -262,4 +262,4 @@ def main():
     final_file.close()
     return final_score
 
-print('\n', main())
+#print('\n', banana())

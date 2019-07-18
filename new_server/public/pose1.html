@@ -1,12 +1,14 @@
 <html>
   <head>
     <!-- Load TensorFlow.js -->
-    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <script src="/FileSaverJS-master/dist/FileSaver.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script> 
+    <!-- <script src="https://unpkg.com/@tensorflow/tfjs"></script> -->
+    <script src="FileSaver.js"></script>
     <scriptsrc src="require.js"></script>
     <!-- Load Posenet -->
-    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://unpkg.com/@tensorflow-models/posenet"></script> -->
+    <script src="jquery-3.4.1.min.js"></script>
  </head>
 
  <style>
@@ -63,8 +65,14 @@
     var predictions = {};
 
     var imageElement = document.getElementById('cat');
+    /* $.post("/posenet", {image: imageElement}); */
 
-    posenet.load().then(function(net){
+    posenet.load({
+      architecture: 'MobileNetV1',
+      outputStride: 16,
+      inputResolution: 513,
+      multiplier: 0.75
+    }).then(function(net){
       return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
     }).then(function(pose){
       console.log(pose);
