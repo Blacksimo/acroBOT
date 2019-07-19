@@ -1,60 +1,65 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <!-- Load TensorFlow.js -->
-    <script src="tf.min.js"></script>
-    <script src="/FileSaver.js"></script>
-    <scriptsrc src="require.js"></script>
-    <!-- Load Posenet -->
-    <script src="posenet.min.js"></script>
-    <script src="jquery-3.4.1.min.js"></script>
- </head>
 
- <style>
+<head>
+  <!-- Load TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet"></script>
+  <!-- <script src="https://unpkg.com/@tensorflow/tfjs"></script> -->
+  <script src="FileSaver.js"></script>
+  <!-- Load Posenet -->
+  <!-- <script src="https://unpkg.com/@tensorflow-models/posenet"></script> -->
+  <script src="jquery-3.4.1.min.js"></script>
 
+  <style>
     .outsideWrapper {
-          width:641px; 
-          height:800px;
-          margin:20px 60px;
-          border:1px solid blue;
-      }
-      .insideWrapper {
-          width:100%;
-          height:100%;
-          position:relative;
-      }
-      .coveredImage {
-          width:100%;
-          height:100%;
-          position:absolute;
-          top:0px;
-          left:0px;
-      }
-      .coveringCanvas {
-          width:100%;
-          height:100%;
-          position:absolute;
-          top:0px;
-          left:0px;
-          background-color: rgba(255, 0, 0, .1);
-      }
+      width: 641px;
+      height: 800px;
+      margin: 20px 60px;
+      border: 1px solid blue;
+    }
 
- </style>
+    .insideWrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
 
-  <body>
+    .coveredImage {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
 
-      <div class="outsideWrapper">
-          <div class="insideWrapper">
-              <img id='cat' src='pose3.png'/> <!-- provaPose2.png -->
-              <canvas id="myCanvas" class="coveringCanvas"></canvas>
-          </div>
-      </div>
-      
-      <!--
+    .coveringCanvas {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background-color: rgba(255, 0, 0, .1);
+    }
+  </style>
+</head>
+
+
+
+<body>
+
+  <div class="outsideWrapper">
+    <div class="insideWrapper">
+      <img id='cat' src='pose3.png' /> <!-- provaPose2.png -->
+      <canvas id="myCanvas" class="coveringCanvas"></canvas>
+    </div>
+  </div>
+
+  <!--
       <img id='cat' src='/provaPose2.png'/>
       <canvas id="myCanvas" width="1280" height="960">
       -->
 
-  </body>
   <!-- Place your code in the script tag below. You can also use an external .js file -->
   <script>
     var imageScaleFactor = 0.5;
@@ -63,10 +68,11 @@
     var predictions = {};
 
     var imageElement = document.getElementById('cat');
+    /* $.post("/posenet", {image: imageElement}); */
 
-    posenet.load().then(function(net){
+    posenet.load().then(function (net) {
       return net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride)
-    }).then(function(pose){
+    }).then(function (pose) {
       console.log(pose);
       // Extracting joints of out interest (the nose is used to check the reversed pose):
       var left_wrist = pose.keypoints[9];
@@ -74,11 +80,11 @@
       var left_knee = pose.keypoints[13];
       var right_knee = pose.keypoints[14];
       var nose = pose.keypoints[0];
-      
+
       // Saving the previous joints in dictionary 'prediction':
       predictions[left_wrist.part] = left_wrist.position;
       predictions[right_wrist.part] = right_wrist.position;
-      predictions[left_knee.part] = left_knee .position;
+      predictions[left_knee.part] = left_knee.position;
       predictions[right_knee.part] = right_knee.position;
 
       var c = document.getElementById("myCanvas");
@@ -87,8 +93,8 @@
       //ctx.fillText("nose", predictions["nose"]["x"]/4.27, predictions["nose"]["y"]/6);
       //ctx.fillText("leftElbow", predictions["leftElbow"]["x"]/4.27, predictions["leftElbow"]["y"]/6);
       //ctx.fillText("rightElbow", predictions["rightElbow"]["x"]/4.27, predictions["rightElbow"]["y"]/6);
-      ctx.fillText("leftKnee", predictions["leftKnee"]["x"]/4.27, predictions["leftKnee"]["y"]/6);
-      ctx.fillText("rightKnee", predictions["rightKnee"]["x"]/4.27, predictions["rightKnee"]["y"]/6);
+      ctx.fillText("leftKnee", predictions["leftKnee"]["x"] / 4.27, predictions["leftKnee"]["y"] / 6);
+      ctx.fillText("rightKnee", predictions["rightKnee"]["x"] / 4.27, predictions["rightKnee"]["y"] / 6);
 
       var filename = "pose3";
       var current_joint_index = 0;
@@ -101,7 +107,7 @@
 
       if (nose.score <= 0.65) {
 
-        reversed_pose = true; 
+        reversed_pose = true;
 
       } else {
 
@@ -109,8 +115,8 @@
 
       }
 
-      var last_joint_index = joints_num-1;
-      for (current_joint_index; current_joint_index<joints_num; current_joint_index++) {
+      var last_joint_index = joints_num - 1;
+      for (current_joint_index; current_joint_index < joints_num; current_joint_index++) {
 
         current_key = Object.keys(predictions)[current_joint_index];
 
@@ -136,12 +142,12 @@
           if (current_key == "leftKnee") {
 
             score = parseFloat(left_knee.score);
-            
+
             if (score <= 0.65) {
 
               current_x_coord = "false";
               current_y_coord = "";
-            
+
             } else {
 
               current_x_coord = predictions[current_key]["x"] + " ";
@@ -179,12 +185,12 @@
 
       }
 
-      blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+      blob = new Blob([text], { type: "text/plain;charset=utf-8" });
 
       saveAs(blob, filename + ".txt");
 
     })
 
   </script>
-  
+</body>
 </html>
