@@ -86,9 +86,10 @@ def bounds_of_interest(x_size, y_size):
 # BOUNDS_OF_INTEREST computes the limits (3 for 'x' and 3 for 'y') along 
 # the 'x' and 'y' directions. 
 
-    x_limit0 = 0
+    x_limit0 = 0    
     x_limit1 = floor(x_size/3)
     x_limit2 = x_limit1*2
+    x_limit3 = x_size    
     x_limit3 = x_size
 
     y_limit0 = 0
@@ -96,6 +97,21 @@ def bounds_of_interest(x_size, y_size):
     y_limit2 = y_limit1*2
     y_limit3 = y_size
 
+    # USE ONLY IF YOU NEED A SMALLER region of interest
+
+    #reducer_areaX = 25
+    #x_limit0 = reducer_areaX
+    #x_limit1 = floor(x_size/3) - reducer_areaX
+    #x_limit2 = x_limit1*2 - reducer_areaX
+    #x_limit3 = x_size - reducer_areaX   
+    #x_limit3 = x_size - reducer_areaX
+
+    #reducer_areaY = 40
+    #y_limit0 = reducer_areaY
+    #y_limit1 = floor(y_size/3) - reducer_areaY
+    #y_limit2 = y_limit1*2 - reducer_areaY
+    #y_limit3 = y_size - reducer_areaY
+    
     return [[x_limit0, x_limit1, x_limit2, x_limit3], [y_limit0, y_limit1, y_limit2, y_limit3]]
 
 def derive_area_from_points(x, y, x_size, y_size):
@@ -188,8 +204,10 @@ def elaborating_score(correct_poses, user_poses):
 def banana():
     files = [predictions_file_parsing("pose1.txt"), predictions_file_parsing("pose2.txt"), predictions_file_parsing("pose3.txt")]
     #predicted_class = predictions_file_parsing("C:\\Users\\damia\\Downloads\\predictions (13).txt")
-    imageX_size = 1280
-    imageY_size = 960
+    #imageX_size = 1280
+    #imageY_size = 960
+    imageX_size = 640
+    imageY_size = 480
     joint_to_areas = {}
     joints_to_areas = []; # --> It will store the predicted areas of each file (it is an array of dictionaries) 
     predicted_classes = []; # --> It will store the predcited 'x' and 'y' values of each file (it is an array of dictionaries)
@@ -262,4 +280,4 @@ def banana():
     final_file.close()
     return final_score
 
-#print('\n', banana())
+print('\n', banana())

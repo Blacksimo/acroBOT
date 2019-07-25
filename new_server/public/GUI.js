@@ -170,13 +170,13 @@ function shuffle(array, level) {
   var currentIndex_knees = knees_positions.length;//, randomIndex;
   var randomIndex;
 
-  //document.getElementById('culo').innerText = "uno";
+
 
   var array_aux_wrists = wrists_positions.slice();
   var array_aux_knees = knees_positions.slice();
   var reduced_sorted_array = new Array();
   var elem_collected = 1;
-  //document.getElementById('culo').innerText = "due";
+
 
   while (elem_collected <= level) {
 
@@ -184,20 +184,9 @@ function shuffle(array, level) {
 
   		// Pick a remaining element...
   		randomIndex = Math.floor(Math.random() * currentIndex_wrists);
-  //document.getElementById('culo').innerText = "tre";
   		
 		  var elem = array_aux_wrists[randomIndex];
-  //document.getElementById('culo').innerText = "tre bis";
 		  
-  		//if (array_aux_knees.indexOf(elem) >= 0) {
-  		//document.getElementById('culo').innerText = "quattro";
-
-  		//	array_aux_wrists.splice(randomIndex, 1);
-  		//	continue;
-
-  		//}
-
-  		// Avoiding to place two wrists on the same area:
   		if (reduced_sorted_array.indexOf(elem) >= 0) {
 
   			//array_aux_wrists.splice(randomIndex, 1);
@@ -206,10 +195,10 @@ function shuffle(array, level) {
   		}
 
   		currentIndex_wrists -= 1;
-		//document.getElementById('culo').innerText = "cinque";
+
 
 		  reduced_sorted_array.push(elem);
-		//document.getElementById('culo').innerText = "sei";
+
 		  
   		array_aux_wrists.splice(randomIndex, 1);
 
@@ -218,11 +207,11 @@ function shuffle(array, level) {
   	} else if ( (elem_collected == 3) ) {
 
 		  // Pick a remaining element...
-  //document.getElementById('culo').innerText = "quattro";
+
 		  
   		randomIndex = Math.floor(Math.random() * currentIndex_knees);
 
-  //document.getElementById('culo').innerText = "cinque";
+
 
   		var elem = array_aux_knees[randomIndex];
 
@@ -242,10 +231,10 @@ function shuffle(array, level) {
   		}
 
   		currentIndex_wrists -= 1;
-		  //document.getElementById('culo').innerText = "sei";
+
 
   		reduced_sorted_array.push(array_aux_knees[randomIndex]);
-		//document.getElementById('culo').innerText = "sette";
+
   		array_aux_knees.splice(randomIndex, 1);
 
   		elem_collected += 1;
@@ -475,7 +464,6 @@ function associate_joints_to_colors(level, dictionary, position, first_elem) {
 				dict[ current_key2.replace(current_key2[0], "right" + (current_key2[0]).toUpperCase()) ] = position[counter];				
 
 			}
-			//console.log("culo")
 
 		}
 

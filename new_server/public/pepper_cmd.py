@@ -232,7 +232,7 @@ def run_behavior(bname):
     beh_service = session.service("ALBehaviorManager")
     beh_service.startBehavior(bname)
     #time.sleep(10)
-    #beh_service.stopBehavior(bname)
+    beh_service.stopBehavior(bname)
 
 
 def takephoto():
